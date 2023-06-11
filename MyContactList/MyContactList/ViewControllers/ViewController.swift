@@ -14,20 +14,31 @@ class ViewController: UIViewController {
     
     let contactsStore = CNContactStore()
     var contacts = [Contact]()
+    var permissionExist = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         requestContactAccess()
-        DispatchQueue.global(qos: .userInteractive).async {
-            self.fetchContacts()
-        }
+        shouldFetchContacts()
     }
 
 
     func requestContactAccess() {
-        contactsStore.requestAccess(for: .contacts) { success, error in
+        contactsStore.requestAccess(for: .contacts) {[weak self] success, error in
+            guard let self = self else {return}
             if success {
                 print("Authorization Successfull")
+                self.permissionExist = true
+            } else {
+                self.showAlert()
+            }
+        }
+    }
+    
+    func shouldFetchContacts() {
+        if permissionExist {
+            DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+                self?.fetchContacts()
             }
         }
     }
@@ -37,10 +48,20 @@ class ViewController: UIViewController {
         let request = CNContactFetchRequest(keysToFetch: key)
         
         try! contactsStore.enumerateContacts(with: request) { [weak self] contact, stoppingPointer in
-            self?.contacts.append(Contact(givenName: contact.givenName, familyName: contact.familyName, number: contact.phoneNumbers.first?.value.stringValue ?? ""))
+            guard let self = self else {return}
+            self.contacts.append(Contact(givenName: contact.givenName, familyName: contact.familyName, number: contact.phoneNumbers.first?.value.stringValue ?? ""))
         }
+        DispatchQueue.main.async { [weak self] in
+            self?.myContactsTableView.reloadData()
+        }
+    }
+    
+    func showAlert() {
+        let alert = UIAlertController(title: "Permission denied", message: "Go To Settings", preferredStyle: .alert)
+        let confirmationButton = UIAlertAction(title: "Ok", style: .default)
+        alert.addAction(confirmationButton)
         DispatchQueue.main.async {
-            self.myContactsTableView.reloadData()
+            self.present(alert, animated: true)
         }
     }
     
