@@ -6,7 +6,12 @@
 //
 
 import Foundation
+import Contacts
 
 struct Contact {
-    let givenName, familyName, number: String
+    let contact: CNContact
+}
+
+struct ContactsSection {
+    let contactsGroup: [Contact]
 }

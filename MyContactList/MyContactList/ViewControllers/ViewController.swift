@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var myContactsTableView: UITableView!
     
     let contactsStore = CNContactStore()
-    var contacts = [Contact]()
+    var contactsSections = [ContactsSection]()
     var permissionExist = false
     
     override func viewDidLoad() {
@@ -48,10 +48,11 @@ class ViewController: UIViewController {
         let request = CNContactFetchRequest(keysToFetch: key)
         
         do {
-            try contactsStore.enumerateContacts(with: request) { [weak self] contact, stoppingPointer in
-            guard let self = self else {return}
-            self.contacts.append(Contact(givenName: contact.givenName, familyName: contact.familyName, number: contact.phoneNumbers.first?.value.stringValue ?? ""))
-            }
+            var contacts = [Contact]()
+            try contactsStore.enumerateContacts(with: request, usingBlock: {contact, stoppingPointer in
+                contacts.append(Contact(contact: contact))
+            })
+            self.contactsSections = [ContactsSection(contactsGroup: contacts)]
         } catch let error{
             print("failed with error: ", error)
         }
@@ -72,18 +73,26 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return contactsSections.count
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        contacts.count
+        contactsSections[section].contactsGroup.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
-        let contact = contacts[indexPath.row]
-        cell.textLabel?.text = contact.givenName + " " + contact.familyName
-        cell.detailTextLabel?.text = contact.number
+        let contact = contactsSections[indexPath.section].contactsGroup[indexPath.row]
+        cell.textLabel?.text = contact.contact.givenName + " " + contact.contact.familyName
+        cell.detailTextLabel?.text = contact.contact.phoneNumbers.first?.value.stringValue
         
         return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Section: \(section)"
+    }
+  
 }
