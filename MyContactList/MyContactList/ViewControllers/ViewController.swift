@@ -47,9 +47,13 @@ class ViewController: UIViewController {
         let key = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey] as [CNKeyDescriptor]
         let request = CNContactFetchRequest(keysToFetch: key)
         
-        try! contactsStore.enumerateContacts(with: request) { [weak self] contact, stoppingPointer in
+        do {
+            try contactsStore.enumerateContacts(with: request) { [weak self] contact, stoppingPointer in
             guard let self = self else {return}
             self.contacts.append(Contact(givenName: contact.givenName, familyName: contact.familyName, number: contact.phoneNumbers.first?.value.stringValue ?? ""))
+            }
+        } catch let error{
+            print("failed with error: ", error)
         }
         DispatchQueue.main.async { [weak self] in
             self?.myContactsTableView.reloadData()
