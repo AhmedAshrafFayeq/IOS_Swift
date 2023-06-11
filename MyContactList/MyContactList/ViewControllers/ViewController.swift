@@ -18,6 +18,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         requestContactAccess()
+        DispatchQueue.global(qos: .userInteractive).async {
+            self.fetchContacts()
+        }
     }
 
 
@@ -26,6 +29,18 @@ class ViewController: UIViewController {
             if success {
                 print("Authorization Successfull")
             }
+        }
+    }
+    
+    func fetchContacts() {
+        let key = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey] as [CNKeyDescriptor]
+        let request = CNContactFetchRequest(keysToFetch: key)
+        
+        try! contactsStore.enumerateContacts(with: request) { [weak self] contact, stoppingPointer in
+            self?.contacts.append(Contact(givenName: contact.givenName, familyName: contact.familyName, number: contact.phoneNumbers.first?.value.stringValue ?? ""))
+        }
+        DispatchQueue.main.async {
+            self.myContactsTableView.reloadData()
         }
     }
     
