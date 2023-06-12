@@ -13,15 +13,22 @@ class ViewController: UIViewController {
     @IBOutlet weak var myContactsTableView: UITableView!
     
     let contactsStore = CNContactStore()
-    var contactsSections = [ContactsSection]()
+    var contactsSections = [[Contact]]()
+    var contacts = [Contact]()
+    let collation = UILocalizedIndexedCollation.current()
     var permissionExist = false
+    var sectionTitles = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         requestContactAccess()
-        shouldFetchContacts()
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        DispatchQueue.main.async {
+            self.myContactsTableView.reloadData()
+        }
+    }
 
     func requestContactAccess() {
         contactsStore.requestAccess(for: .contacts) {[weak self] success, error in
@@ -29,6 +36,7 @@ class ViewController: UIViewController {
             if success {
                 print("Authorization Successfull")
                 self.permissionExist = true
+                self.shouldFetchContacts()
             } else {
                 self.showAlert()
             }
@@ -46,18 +54,15 @@ class ViewController: UIViewController {
     func fetchContacts() {
         let key = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey] as [CNKeyDescriptor]
         let request = CNContactFetchRequest(keysToFetch: key)
-        
+        request.sortOrder = CNContactSortOrder.userDefault
         do {
-            var contacts = [Contact]()
             try contactsStore.enumerateContacts(with: request, usingBlock: {contact, stoppingPointer in
-                contacts.append(Contact(contact: contact))
+                guard let phoneNumber = contact.phoneNumbers.first?.value.stringValue else {return}
+                self.contacts.append(Contact(givenName: contact.givenName, familyName: contact.familyName, mobile: phoneNumber))
             })
-            self.contactsSections = [ContactsSection(contactsGroup: contacts)]
+            self.setupView()
         } catch let error{
             print("failed with error: ", error)
-        }
-        DispatchQueue.main.async { [weak self] in
-            self?.myContactsTableView.reloadData()
         }
     }
     
@@ -70,29 +75,75 @@ class ViewController: UIViewController {
         }
     }
     
+    func setupView() {
+        let (arrayContacts, arrayTitles) = collation.partitionObjects(array: self.contacts, collationStringSelector: #selector(getter: Contact.givenName))
+                self.contactsSections = arrayContacts as! [[Contact]]
+                self.sectionTitles = arrayTitles
+
+                print(contactsSections.count)
+                print(sectionTitles.count)
+        DispatchQueue.main.async {
+            self.myContactsTableView.reloadData()
+        }
+    }
+    
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return contactsSections.count
+        return sectionTitles.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        contactsSections[section].contactsGroup.count
+        contactsSections[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
-        let contact = contactsSections[indexPath.section].contactsGroup[indexPath.row]
-        cell.textLabel?.text = contact.contact.givenName + " " + contact.contact.familyName
-        cell.detailTextLabel?.text = contact.contact.phoneNumbers.first?.value.stringValue
+        let contact = contactsSections[indexPath.section][indexPath.row]
+        cell.textLabel?.text = contact.givenName + " " + contact.familyName
+        cell.detailTextLabel?.text = contact.mobile
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Section: \(section)"
+        return sectionTitles[section]
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            return 44
+    }
+
+    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+            return sectionTitles
     }
   
+}
+
+extension UILocalizedIndexedCollation {
+    //func for partition array in sections
+    func partitionObjects(array:[Contact], collationStringSelector:Selector) -> ([AnyObject], [String]) {
+        var unsortedSections = [[Contact]]()
+
+        //1. Create a array to hold the data for each section
+        for _ in self.sectionTitles {
+            unsortedSections.append([]) //appending an empty array
+        }
+        //2. Put each objects into a section
+        for item in array {
+            let index:Int = self.section(for: item, collationStringSelector:collationStringSelector)
+            unsortedSections[index].append(item)
+        }
+        //3. sorting the array of each sections
+        var sectionTitles = [String]()
+        var sections = [AnyObject]()
+        for index in 0 ..< unsortedSections.count { if unsortedSections[index].count > 0 {
+            sectionTitles.append(self.sectionTitles[index])
+            sections.append(self.sortedArray(from: unsortedSections[index], collationStringSelector: collationStringSelector) as AnyObject)
+            }
+        }
+        return (sections, sectionTitles)
+    }
 }
