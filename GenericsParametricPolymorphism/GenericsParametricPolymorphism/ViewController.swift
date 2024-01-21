@@ -11,9 +11,22 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        var stack = Stack<Int>()
+        stack.push(1)
+        stack.push(2)
+        stack.push(3)
+        
+        print("is empty? ", stack.isEmpty)
+        print("the top of stack is: ", stack.top ?? "")
+        
+        print("the deleted item is: ", stack.pop() ?? "")
+        
+        
+        var stack2: Stack = [3,2,1]
+        print("is empty? ", stack2.isEmpty)
+        print("the top of stack is: ", stack2.top ?? "")
+        
+        print("the deleted item is: ", stack2.pop() ?? "")
+        
     }
-
-
 }
-
