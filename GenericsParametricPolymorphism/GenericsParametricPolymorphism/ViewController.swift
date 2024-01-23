@@ -19,18 +19,17 @@ class ViewController: UIViewController {
         print("the top of stack is: ", stack.top ?? "")
         print("the deleted item is: ", stack.pop() ?? "")
 
-        var stack2: Stack = [3,2,1]
+        var stack2: Stack = [3, 2, 1]
         print("is empty? ", stack2.isEmpty)
         print("the top of stack is: ", stack2.top ?? "")
         print("the deleted item is: ", stack2.pop() ?? "")
-        
         print("------------------------")
         print(add(5, 6))
     }
 }
 
 extension ViewController {
-    func add<T: Numeric> (_ x: T, _ y: T)-> T {
-        x + y
+    func add<T: Numeric> (_ num1: T, _ num2: T) -> T {
+        num1 + num2
     }
 }
