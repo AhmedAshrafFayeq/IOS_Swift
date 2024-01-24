@@ -8,6 +8,7 @@
 import UIKit
 
 class ViewController: UIViewController {
+    var viewModel = ViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,9 @@ class ViewController: UIViewController {
         print("the deleted item is: ", stack2.pop() ?? "")
         print("------------------------")
         print(add(5, 6))
+        print("------------------------")
+        print("------------------------")
+        viewModel.didServiceAMagic()
     }
 }
 
