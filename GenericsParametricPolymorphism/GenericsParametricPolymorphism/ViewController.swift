@@ -28,7 +28,12 @@ class ViewController: UIViewController {
         print(add(5, 6))
         print("------------------------")
         print("------------------------")
-        viewModel.didServiceAMagic()
+        Task {
+            await didTapAnyAction()
+        }
+    }
+    func didTapAnyAction() async {
+        await viewModel.didServiceAMagic()
     }
 }
 

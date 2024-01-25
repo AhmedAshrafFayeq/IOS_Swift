@@ -12,18 +12,23 @@ class ViewModel {
     @Injected(\.serviceA) private var myServiceA
     @Injected(\.serviceB) private var myServiceB
     @Injected(\.serviceC) private var myServiceC
-    
-    func didServiceAMagic() {
-        myServiceA.didServiceAAction()
+    //MARK: -Methods
+    func didServiceAMagic() async {
+        await myServiceA.didServiceAAction()
     }
 }
 
 protocol ServiceA {
-    func didServiceAAction()
+    func didServiceAAction() async
 }
 class DefaultServiceA: ServiceA {
-    func didServiceAAction() {
-        print("Hello from Service A")
+    func didServiceAAction() async {
+        return await withCheckedContinuation{ continuation in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                print("Hello from Service A")
+                continuation.resume()
+            }
+        }
     }
 }
 
