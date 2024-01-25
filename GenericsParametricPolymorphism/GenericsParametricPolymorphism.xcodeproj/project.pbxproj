@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D8E16032B6267B20071CFDF /* GenericsParametricPolymorphismTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8E16022B6267B20071CFDF /* GenericsParametricPolymorphismTests.swift */; };
 		6DE18EC02B5CF03200B840C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE18EBF2B5CF03200B840C7 /* AppDelegate.swift */; };
 		6DE18EC22B5CF03200B840C7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE18EC12B5CF03200B840C7 /* SceneDelegate.swift */; };
 		6DE18EC42B5CF03200B840C7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE18EC32B5CF03200B840C7 /* ViewController.swift */; };
@@ -23,7 +24,19 @@
 		6DFA72562B611C1900215D8F /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFA72552B611C1900215D8F /* ViewModel.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		6D8E16042B6267B20071CFDF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6DE18EB42B5CF03200B840C7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6DE18EBB2B5CF03200B840C7;
+			remoteInfo = GenericsParametricPolymorphism;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		6D8E16002B6267B20071CFDF /* GenericsParametricPolymorphismTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GenericsParametricPolymorphismTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D8E16022B6267B20071CFDF /* GenericsParametricPolymorphismTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericsParametricPolymorphismTests.swift; sourceTree = "<group>"; };
 		6DE18EBC2B5CF03200B840C7 /* GenericsParametricPolymorphism.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GenericsParametricPolymorphism.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DE18EBF2B5CF03200B840C7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6DE18EC12B5CF03200B840C7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -42,6 +55,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		6D8E15FD2B6267B20071CFDF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6DE18EB92B5CF03200B840C7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -53,10 +73,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6D8E16012B6267B20071CFDF /* GenericsParametricPolymorphismTests */ = {
+			isa = PBXGroup;
+			children = (
+				6D8E16022B6267B20071CFDF /* GenericsParametricPolymorphismTests.swift */,
+			);
+			path = GenericsParametricPolymorphismTests;
+			sourceTree = "<group>";
+		};
 		6DE18EB32B5CF03200B840C7 = {
 			isa = PBXGroup;
 			children = (
 				6DE18EBE2B5CF03200B840C7 /* GenericsParametricPolymorphism */,
+				6D8E16012B6267B20071CFDF /* GenericsParametricPolymorphismTests */,
 				6DE18EBD2B5CF03200B840C7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -65,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				6DE18EBC2B5CF03200B840C7 /* GenericsParametricPolymorphism.app */,
+				6D8E16002B6267B20071CFDF /* GenericsParametricPolymorphismTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -125,6 +155,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		6D8E15FF2B6267B20071CFDF /* GenericsParametricPolymorphismTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6D8E16082B6267B20071CFDF /* Build configuration list for PBXNativeTarget "GenericsParametricPolymorphismTests" */;
+			buildPhases = (
+				6D8E15FC2B6267B20071CFDF /* Sources */,
+				6D8E15FD2B6267B20071CFDF /* Frameworks */,
+				6D8E15FE2B6267B20071CFDF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6D8E16052B6267B20071CFDF /* PBXTargetDependency */,
+			);
+			name = GenericsParametricPolymorphismTests;
+			productName = GenericsParametricPolymorphismTests;
+			productReference = 6D8E16002B6267B20071CFDF /* GenericsParametricPolymorphismTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		6DE18EBB2B5CF03200B840C7 /* GenericsParametricPolymorphism */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6DE18ED02B5CF03400B840C7 /* Build configuration list for PBXNativeTarget "GenericsParametricPolymorphism" */;
@@ -156,6 +204,10 @@
 				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1420;
 				TargetAttributes = {
+					6D8E15FF2B6267B20071CFDF = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 6DE18EBB2B5CF03200B840C7;
+					};
 					6DE18EBB2B5CF03200B840C7 = {
 						CreatedOnToolsVersion = 14.2;
 					};
@@ -178,11 +230,19 @@
 			projectRoot = "";
 			targets = (
 				6DE18EBB2B5CF03200B840C7 /* GenericsParametricPolymorphism */,
+				6D8E15FF2B6267B20071CFDF /* GenericsParametricPolymorphismTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		6D8E15FE2B6267B20071CFDF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6DE18EBA2B5CF03200B840C7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -217,6 +277,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		6D8E15FC2B6267B20071CFDF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6D8E16032B6267B20071CFDF /* GenericsParametricPolymorphismTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6DE18EB82B5CF03200B840C7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -235,6 +303,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6D8E16052B6267B20071CFDF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6DE18EBB2B5CF03200B840C7 /* GenericsParametricPolymorphism */;
+			targetProxy = 6D8E16042B6267B20071CFDF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		6DE18EC52B5CF03200B840C7 /* Main.storyboard */ = {
@@ -256,6 +332,42 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		6D8E16062B6267B20071CFDF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7B56P4595F;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fayeq.GenericsParametricPolymorphismTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GenericsParametricPolymorphism.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GenericsParametricPolymorphism";
+			};
+			name = Debug;
+		};
+		6D8E16072B6267B20071CFDF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7B56P4595F;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fayeq.GenericsParametricPolymorphismTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GenericsParametricPolymorphism.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GenericsParametricPolymorphism";
+			};
+			name = Release;
+		};
 		6DE18ECE2B5CF03400B840C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -429,6 +541,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		6D8E16082B6267B20071CFDF /* Build configuration list for PBXNativeTarget "GenericsParametricPolymorphismTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6D8E16062B6267B20071CFDF /* Debug */,
+				6D8E16072B6267B20071CFDF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		6DE18EB72B5CF03200B840C7 /* Build configuration list for PBXProject "GenericsParametricPolymorphism" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
